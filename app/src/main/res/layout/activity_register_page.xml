@@ -53,7 +53,7 @@
                 android:paddingStart="21dp"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textColorHint="@color/gray"
                 android:textSize="12dp" />
 
@@ -68,7 +68,7 @@
                 android:paddingStart="21dp"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textColorHint="@color/gray"
                 android:textSize="12dp" />
 

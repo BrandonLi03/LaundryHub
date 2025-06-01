@@ -1,7 +1,8 @@
 [versions]
+#diganti jadi agp = 8.4.1 sama coreKtx = 1.12.0 karena di gw gabisa kalau lebih tinggi
 agp = "8.4.1"
 kotlin = "1.9.0"
-coreKtx = "1.16.0"
+coreKtx = "1.12.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
