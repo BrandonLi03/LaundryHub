@@ -1,10 +1,12 @@
 package com.example.laundryhub.Page
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -34,6 +36,10 @@ class HomePage : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home_page)
 
+        val btnProfile: ImageView = findViewById(R.id.btn_profile)
+        val btnNota: ImageView = findViewById(R.id.btn_nota)
+        val btnMap: ImageView = findViewById(R.id.btn_map)
+
         val tvUser: TextView = findViewById(R.id.tv_user)
         tvNomorAntrian = findViewById(R.id.tv_nomor_antrian)
         tvAntrianUser = findViewById(R.id.tv_antrian_user)
@@ -44,6 +50,19 @@ class HomePage : AppCompatActivity() {
 
         tvAntrianUser.visibility = View.GONE
         tvNomorAntrian.text = "0"
+
+//        btnProfile.setOnClickListener {
+//            val intent
+//        }
+//
+//        btnNota.setOnClickListener {
+//            val intent
+//        }
+//
+        btnMap.setOnClickListener {
+            val intent = Intent(this, MapPage::class.java)
+            startActivity(intent)
+        }
 
         btnAmbilAntrian.setOnClickListener {
             if(nomorYangDiambilUser != null) {
