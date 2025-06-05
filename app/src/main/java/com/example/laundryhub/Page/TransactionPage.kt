@@ -3,6 +3,7 @@ package com.example.laundryhub.Page
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageButton
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,6 +19,7 @@ class TransactionPage : AppCompatActivity(), TransactionAdapter.OnItemClickListe
     private lateinit var databaseHelper: DatabaseHelper
     private lateinit var transactionAdapter: TransactionAdapter
     private lateinit var binding: ActivityTransactionPageBinding
+    private lateinit var back_btn: ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,8 +29,14 @@ class TransactionPage : AppCompatActivity(), TransactionAdapter.OnItemClickListe
 
         databaseHelper = DatabaseHelper(this)
         transactionRecyclerView = binding.rvTransaction
+        back_btn = binding.btnBack
 
         setUpRecycler()
+
+        back_btn.setOnClickListener {
+            val intent = Intent(this, HomePage::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun setUpRecycler() {

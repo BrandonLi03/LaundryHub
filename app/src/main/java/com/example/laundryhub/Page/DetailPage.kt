@@ -1,7 +1,10 @@
 package com.example.laundryhub.Page
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -24,6 +27,7 @@ class DetailPage : AppCompatActivity() {
     private lateinit var receiptCodes: TextView
     private lateinit var DropDate: TextView
     private lateinit var pickUpDate: TextView
+    private lateinit var back_btn: ImageButton
     var receiptCode: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,12 +43,18 @@ class DetailPage : AppCompatActivity() {
         receiptCodes = binding.tvDetailReceiptCode
         DropDate = binding.tvDetailDropDate
         pickUpDate = binding.tvDetailPickupDate
+        back_btn = binding.btnBack
 
         receiptCodes.text = receiptCode.toString()
         DropDate.text = intent.getStringExtra("dropDate")
         pickUpDate.text = intent.getStringExtra("pickUpDate")
 
         setUpRecycler()
+
+        back_btn.setOnClickListener{
+            val intent = Intent(this, TransactionPage::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun setUpRecycler() {

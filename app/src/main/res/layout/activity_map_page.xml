@@ -20,6 +20,6 @@
         android:src="@drawable/ic_back_24"
         android:background="@drawable/circular_background"
         android:layout_marginTop="50dp"
-        android:layout_marginStart="30dp"/>/>
+        android:layout_marginStart="30dp"/>
 
 </FrameLayout>

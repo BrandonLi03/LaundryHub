@@ -41,7 +41,14 @@ class DatabaseHelper(var context: Context): SQLiteOpenHelper(context, "LaundryHu
 
     fun insertItemsDummy(db: SQLiteDatabase?){
         val insertItems = "insert into transactionItems(itemId, receiptCode, clothing, quantity) values(null, 1, 'Shirt', 2), " +
-                "(null, 1, 'Pants', 4)"
+                "(null, 1, 'Pants', 4)," +
+                "(null, 1, 'T-Shirt', 3)," +
+                "(null, 1, 'Socks', 6)," +
+                "(null, 2, 'Shirt', 1)," +
+                "(null, 2, 'Pants', 2)," +
+                "(null, 2, 'T-Shirt', 1)," +
+                "(null, 2, 'Socks', 4)," +
+                "(null, 2, 'Alamater', 1)"
         db?.execSQL(insertItems)
     }
 

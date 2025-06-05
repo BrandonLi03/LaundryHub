@@ -55,10 +55,11 @@ class HomePage : AppCompatActivity() {
 //            val intent
 //        }
 //
-//        btnNota.setOnClickListener {
-//            val intent
-//        }
-//
+        btnNota.setOnClickListener {
+            val intent = Intent(this, TransactionPage::class.java)
+            startActivity(intent)
+        }
+
         btnMap.setOnClickListener {
             val intent = Intent(this, MapPage::class.java)
             startActivity(intent)
@@ -70,7 +71,7 @@ class HomePage : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            val nomorUntukDiambil = nomorAntrianSekarang
+            val nomorUntukDiambil = nomorAntrianSekarang + 1
 
             nomorYangDiambilUser = nomorUntukDiambil
 
