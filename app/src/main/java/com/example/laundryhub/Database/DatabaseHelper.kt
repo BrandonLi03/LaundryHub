@@ -5,6 +5,9 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import com.example.laundryhub.Model.Transaction
 import com.example.laundryhub.Model.DetailTransaction
+import android.content.ContentValues
+import android.widget.Toast
+import com.example.laundryhub.Model.User
 
 class DatabaseHelper(var context: Context): SQLiteOpenHelper(context, "LaundryHub", null, 1) {
     fun createUser(db: SQLiteDatabase?){
@@ -90,8 +93,8 @@ class DatabaseHelper(var context: Context): SQLiteOpenHelper(context, "LaundryHu
         val query = "select clothing, quantity from transactionItems where receiptCode = ?"
 
         val cursor = db.rawQuery(query, arrayOf(receiptCode.toString()))
-        if(cursor.moveToFirst()) {
-            do{
+        if (cursor.moveToFirst()) {
+            do {
                 val items = DetailTransaction()
                 items.clothing = cursor.getString(cursor.getColumnIndexOrThrow("clothing"))
                 items.quantity = cursor.getInt(cursor.getColumnIndexOrThrow("quantity"))
@@ -101,6 +104,100 @@ class DatabaseHelper(var context: Context): SQLiteOpenHelper(context, "LaundryHu
         cursor.close()
         db.close()
         return itemList
+    }
+
+    fun insertUser(user: User): Boolean {
+        if (isUsernameExists(user.username)) {
+            Toast.makeText(context, "Username already exists", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        val db = writableDatabase
+        val cv = ContentValues()
+        cv.put("username", user.username)
+        cv.put("password", user.password)
+        cv.put("phoneNumber", user.phoneNumber)
+
+        val result = db.insert("users", null, cv)
+        db.close()
+
+        return if (result == -1L) {
+            Toast.makeText(context, "Registration Failed", Toast.LENGTH_SHORT).show()
+            false
+        } else {
+            Toast.makeText(context, "Registration Success", Toast.LENGTH_SHORT).show()
+            true
+        }
+    }
+
+    fun syncData(): MutableList<User> {
+        val userList = mutableListOf<User>()
+        val db = readableDatabase
+        val cursor = db.rawQuery("select * from users", null)
+
+        while (cursor.moveToNext()) {
+            val id = cursor.getInt(cursor.getColumnIndexOrThrow("userId"))
+            val username = cursor.getString(cursor.getColumnIndexOrThrow("username")) // Get username
+            val password = cursor.getString(cursor.getColumnIndexOrThrow("password"))
+            val phoneNumber = cursor.getInt(cursor.getColumnIndexOrThrow("phoneNumber"))
+
+            val user = User(id, username, password, phoneNumber) // Pass username to constructor
+            userList.add(user)
+        }
+        cursor.close()
+        db.close()
+        return userList
+    }
+
+    fun getUserByPhoneAndPassword(phone: Int, password: String): User? {
+        val db = this.readableDatabase
+        val query = "SELECT * FROM users WHERE phoneNumber = ? AND password = ?"
+        val cursor = db.rawQuery(query, arrayOf(phone.toString(), password))
+
+        var user: User? = null
+        if (cursor.moveToFirst()) {
+            val id = cursor.getInt(cursor.getColumnIndexOrThrow("userId"))
+            val username = cursor.getString(cursor.getColumnIndexOrThrow("username"))
+            val pass = cursor.getString(cursor.getColumnIndexOrThrow("password"))
+            val phoneNum = cursor.getInt(cursor.getColumnIndexOrThrow("phoneNumber"))
+
+            user = User(id, username, pass, phoneNum)
+        }
+
+        cursor.close()
+        db.close()
+        return user
+    }
+
+
+
+    fun isUsernameExists(username: String): Boolean {
+        val db = readableDatabase
+        val query = "SELECT * FROM users WHERE username = ?"
+        val cursor = db.rawQuery(query, arrayOf(username))
+        val exists = cursor.count > 0
+        cursor.close()
+        db.close()
+        return exists
+    }
+
+    fun getUserById(userId: Int): User? {
+        val db = readableDatabase
+        val query = "SELECT * FROM users WHERE userId = ?"
+        val cursor = db.rawQuery(query, arrayOf(userId.toString()))
+
+        var user: User? = null
+        if (cursor.moveToFirst()) {
+            val username = cursor.getString(cursor.getColumnIndexOrThrow("username"))
+            val password = cursor.getString(cursor.getColumnIndexOrThrow("password"))
+            val phoneNumber = cursor.getInt(cursor.getColumnIndexOrThrow("phoneNumber"))
+
+            user = User(userId, username, password, phoneNumber)
+        }
+
+        cursor.close()
+        db.close()
+        return user
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
