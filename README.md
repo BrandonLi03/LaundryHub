@@ -33,13 +33,40 @@ LaundryHub is a modern app that helps users easily take their place in the laund
 
 ## 🖼️ Screenshot
 
-![Transaction Page](https://github.com/user-attachments/assets/c4b253f6-29f8-4515-9085-b90969ffb47d)
-![Register Page](https://github.com/user-attachments/assets/a744a351-0cc0-4266-a10e-ccbd205fbe12)
-![Profile Page](https://github.com/user-attachments/assets/255b0dc0-2230-4595-97bd-a5210f547f2b)
-![News Api](https://github.com/user-attachments/assets/84799ccb-3a87-4c45-a2aa-dbbfb006a583)
-![Login Page](https://github.com/user-attachments/assets/53bf24e6-e42c-4d5e-a9ee-4ad8bc1a9009)
-![Home Page](https://github.com/user-attachments/assets/295f6dd3-4c7a-4896-8158-81a83068888b)
-![Detail Page](https://github.com/user-attachments/assets/ccd0dd83-8fc3-4319-b05e-741ce21b577a)
+**Login Page**   
+<figure>
+  <img src="https://github.com/user-attachments/assets/53bf24e6-e42c-4d5e-a9ee-4ad8bc1a9009" width="300px" />
+</figure>
+
+**Register Page**
+<figure>
+  <img src="https://github.com/user-attachments/assets/a744a351-0cc0-4266-a10e-ccbd205fbe12" width="300px" />
+</figure>
+
+**Home Page**
+<figure>
+  <img src="https://github.com/user-attachments/assets/295f6dd3-4c7a-4896-8158-81a83068888b" width="300px" />
+</figure>
+
+**Transaction Page**
+<figure>
+  <img src="https://github.com/user-attachments/assets/c4b253f6-29f8-4515-9085-b90969ffb47d" width="300px" />
+</figure>
+
+**Detail Page**
+<figure>
+  <img src="https://github.com/user-attachments/assets/ccd0dd83-8fc3-4319-b05e-741ce21b577a" width="300px" />
+</figure>
+
+**News Page**
+<figure>
+  <img src="https://github.com/user-attachments/assets/84799ccb-3a87-4c45-a2aa-dbbfb006a583" width="300px" />
+</figure>
+
+**News Page**
+<figure>
+  <img src="https://github.com/user-attachments/assets/255b0dc0-2230-4595-97bd-a5210f547f2b" width="300px" />
+</figure>
 
 ---
 
