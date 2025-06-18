@@ -14,7 +14,8 @@ class DatabaseHelper(var context: Context): SQLiteOpenHelper(context, "LaundryHu
         val createUserTable = "create table if not exists users(userId integer primary key autoincrement," +
                 "username text, " +
                 "password text, " +
-                "phoneNumber integer)"
+                "phoneNumber integer," +
+                "quota integer)"
         db?.execSQL(createUserTable)
     }
 
@@ -23,6 +24,7 @@ class DatabaseHelper(var context: Context): SQLiteOpenHelper(context, "LaundryHu
                 "userId integer, " +
                 "dropDate text," +
                 "pickUpDate text, " +
+                "totalWeight integer," +
                 "foreign key(userId) references users(userId))"
         db?.execSQL(createTransactionTable)
     }
@@ -37,8 +39,8 @@ class DatabaseHelper(var context: Context): SQLiteOpenHelper(context, "LaundryHu
     }
 
     fun insertTransactionDummy(db: SQLiteDatabase?){
-        val insertTransaction = "insert into transactions(receiptCode, userId, dropDate, pickUpDate) values(null, 1, '2025-10-10', '2025-12-10'), " +
-                "(null, 1, '2025-20-10', '2025-25-10')"
+        val insertTransaction = "insert into transactions(receiptCode, userId, dropDate, pickUpDate, totalWeight) values(null, 1, '2025-10-10', '2025-12-10', 4), " +
+                "(null, 1, '2025-20-10', '2025-25-10', 5)"
         db?.execSQL(insertTransaction)
     }
 
@@ -68,7 +70,7 @@ class DatabaseHelper(var context: Context): SQLiteOpenHelper(context, "LaundryHu
         val transactionList = ArrayList<Transaction>()
 
         val db = readableDatabase
-        val query = "select receiptCode, dropDate, pickUpDate from transactions where userId = ?"
+        val query = "select receiptCode, dropDate, pickUpDate, totalWeight from transactions where userId = ?"
 
         val cursor = db.rawQuery(query, arrayOf(userId.toString()))
         if (cursor.moveToFirst()) {
@@ -77,6 +79,7 @@ class DatabaseHelper(var context: Context): SQLiteOpenHelper(context, "LaundryHu
                 transaction.receiptCode = cursor.getInt(cursor.getColumnIndexOrThrow("receiptCode"))
                 transaction.dropDate = cursor.getString(cursor.getColumnIndexOrThrow("dropDate"))
                 transaction.pickUpDate = cursor.getString(cursor.getColumnIndexOrThrow("pickUpDate"))
+                transaction.weight = cursor.getInt(cursor.getColumnIndexOrThrow("totalWeight"))
                 transactionList.add(transaction)
             } while (cursor.moveToNext())
         }
@@ -140,8 +143,9 @@ class DatabaseHelper(var context: Context): SQLiteOpenHelper(context, "LaundryHu
             val username = cursor.getString(cursor.getColumnIndexOrThrow("username")) // Get username
             val password = cursor.getString(cursor.getColumnIndexOrThrow("password"))
             val phoneNumber = cursor.getInt(cursor.getColumnIndexOrThrow("phoneNumber"))
+            val quota = cursor.getInt(cursor.getColumnIndexOrThrow("quota"))
 
-            val user = User(id, username, password, phoneNumber) // Pass username to constructor
+            val user = User(id, username, password, phoneNumber, quota) // Pass username to constructor
             userList.add(user)
         }
         cursor.close()
@@ -160,16 +164,15 @@ class DatabaseHelper(var context: Context): SQLiteOpenHelper(context, "LaundryHu
             val username = cursor.getString(cursor.getColumnIndexOrThrow("username"))
             val pass = cursor.getString(cursor.getColumnIndexOrThrow("password"))
             val phoneNum = cursor.getInt(cursor.getColumnIndexOrThrow("phoneNumber"))
+            val quota = cursor.getInt(cursor.getColumnIndexOrThrow("quota"))
 
-            user = User(id, username, pass, phoneNum)
+            user = User(id, username, pass, phoneNum, quota)
         }
 
         cursor.close()
         db.close()
         return user
     }
-
-
 
     fun isUsernameExists(username: String): Boolean {
         val db = readableDatabase
@@ -191,13 +194,33 @@ class DatabaseHelper(var context: Context): SQLiteOpenHelper(context, "LaundryHu
             val username = cursor.getString(cursor.getColumnIndexOrThrow("username"))
             val password = cursor.getString(cursor.getColumnIndexOrThrow("password"))
             val phoneNumber = cursor.getInt(cursor.getColumnIndexOrThrow("phoneNumber"))
+            val quota = cursor.getInt(cursor.getColumnIndexOrThrow("quota"))
 
-            user = User(userId, username, password, phoneNumber)
+            user = User(userId, username, password, phoneNumber, quota)
         }
 
         cursor.close()
         db.close()
         return user
+    }
+
+    fun updateQuotaFromTransactions(userId: Int) {
+        val db = writableDatabase
+        val query = "SELECT SUM(totalWeight) as total FROM transactions WHERE userId = ?"
+        val cursor = db.rawQuery(query, arrayOf(userId.toString()))
+
+        var totalWeight = 0
+        if (cursor.moveToFirst()) {
+            totalWeight = cursor.getInt(cursor.getColumnIndexOrThrow("total"))
+        }
+
+        cursor.close()
+
+        val cv = ContentValues()
+        cv.put("quota", totalWeight)
+        db.update("users", cv, "userId = ?", arrayOf(userId.toString()))
+
+        db.close()
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {

@@ -18,11 +18,13 @@ class TransactionAdapter(private val transactionList: ArrayList<Transaction>, pr
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private var receiptCode = itemView.findViewById<TextView>(R.id.tv_receipt_code)
         private var date = itemView.findViewById<TextView>(R.id.tv_date)
+        private var weight = itemView.findViewById<TextView>(R.id.tv_weight)
         private var cardView = itemView.findViewById<CardView>(R.id.cv_transaction)
 
         fun bind(transaction: Transaction, clickListener: OnItemClickListener){
             receiptCode.text =transaction.receiptCode.toString()
             date.text = transaction.dropDate
+            weight.text = transaction.weight.toString()
             cardView.setOnClickListener {
                 clickListener.onItemClick(transaction)
             }

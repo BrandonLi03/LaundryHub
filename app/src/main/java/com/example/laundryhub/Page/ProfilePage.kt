@@ -1,4 +1,4 @@
-package com.example.laundryhub
+package com.example.laundryhub.Page
 
 import android.app.Activity
 import android.content.Context
@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.laundryhub.Database.DatabaseHelper
+import com.example.laundryhub.R
 
 class ProfilePage : AppCompatActivity() {
 

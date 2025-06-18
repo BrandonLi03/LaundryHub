@@ -1,5 +1,6 @@
 package com.example.laundryhub.Page
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -20,6 +21,7 @@ class TransactionPage : AppCompatActivity(), TransactionAdapter.OnItemClickListe
     private lateinit var transactionAdapter: TransactionAdapter
     private lateinit var binding: ActivityTransactionPageBinding
     private lateinit var back_btn: ImageButton
+    private var userId: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +33,9 @@ class TransactionPage : AppCompatActivity(), TransactionAdapter.OnItemClickListe
         transactionRecyclerView = binding.rvTransaction
         back_btn = binding.btnBack
 
+        val sharedPref = getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
+        userId = sharedPref.getInt("userId", -1)
+
         setUpRecycler()
 
         back_btn.setOnClickListener {
@@ -40,8 +45,8 @@ class TransactionPage : AppCompatActivity(), TransactionAdapter.OnItemClickListe
     }
 
     private fun setUpRecycler() {
-        val arrayList = databaseHelper.getTransaction(1)
-        Log.d("DEBUG", "Total receipt: ${arrayList.size} user: 1")
+        val arrayList = databaseHelper.getTransaction(userId)
+        Log.d("DEBUG", "Total receipt: ${arrayList.size} user: ${userId}")
         transactionAdapter = TransactionAdapter(arrayList, this)
         transactionRecyclerView.layoutManager = LinearLayoutManager(this)
         transactionRecyclerView.adapter = transactionAdapter

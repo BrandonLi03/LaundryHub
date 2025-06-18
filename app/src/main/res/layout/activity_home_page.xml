@@ -35,6 +35,18 @@
             android:layout_weight="1" />
 
         <ImageView
+            android:id="@+id/btn_news"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/icons8_news"
+            android:background="@drawable/circular_background"
+            android:padding="12dp"
+            android:scaleType="centerInside"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_marginEnd="8dp"/>
+
+        <ImageView
             android:id="@+id/btn_nota"
             android:layout_width="48dp"
             android:layout_height="48dp"
@@ -94,11 +106,12 @@
                 android:paddingBottom="8dp"/>
 
             <ProgressBar
+                android:id="@+id/progress_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:max="105"
-                android:progress="92"
+                android:progress="90"
                 android:progressTint="@color/blue"/>
 
             <LinearLayout
@@ -107,6 +120,7 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/tv_quota"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="92 kg"

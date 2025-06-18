@@ -1,4 +1,4 @@
-package com.example.laundryhub
+package com.example.laundryhub.Page
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,6 +12,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.laundryhub.Database.DatabaseHelper
 import com.example.laundryhub.Model.User
+import com.example.laundryhub.R
 
 class RegisterPage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,7 +49,7 @@ class RegisterPage : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            val user = User(0, username, password, phoneNumber)
+            val user = User(0, username, password, phoneNumber, 0)
             val isInserted = dbHelper.insertUser(user)
 
             if (isInserted) {

@@ -1,4 +1,4 @@
-package com.example.laundryhub
+package com.example.laundryhub.Page
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.laundryhub.Database.DatabaseHelper
+import com.example.laundryhub.R
 
 class LoginPage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,7 +53,7 @@ class LoginPage : AppCompatActivity() {
                 sharedPref.edit().putInt("userId", user.userId).apply()
 
                 Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, ProfilePage::class.java) // or Homepage
+                val intent = Intent(this, HomePage::class.java)
                 startActivity(intent)
                 finish()
             } else {
